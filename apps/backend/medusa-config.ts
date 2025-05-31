@@ -1,4 +1,5 @@
-import { defineConfig, loadEnv } from '@medusajs/framework/utils'
+import { defineConfig, loadEnv } from '@medusajs/framework/utils';
+
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
@@ -24,6 +25,7 @@ module.exports = defineConfig({
     { resolve: './src/modules/reviews' },
     { resolve: './src/modules/brand' },
     { resolve: './src/modules/wishlist' },
+    { resolve: './src/modules/styledtoken' },
     { resolve: './src/modules/split-order-payment' },
     {
       resolve: './src/modules/taxcode',
