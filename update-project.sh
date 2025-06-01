@@ -3,8 +3,8 @@ echo "Fetching latest updates from upstream..."
 git fetch upstream
 
 echo "Merging upstream/main into your custom branch..."
-git checkout main
+git checkout admin/upstream
 git merge upstream/main
 
 echo "Pushing updates to your GitHub repo..."
-git push origin main
+git push origin admin/upstream

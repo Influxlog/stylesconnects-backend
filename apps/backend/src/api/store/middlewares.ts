@@ -6,6 +6,7 @@ import { storeOrderReturnRequestsMiddlewares } from './return-request/middleware
 import { storeReviewMiddlewares } from './reviews/middlewares'
 import { storeSellerMiddlewares } from './seller/middlewares'
 import { storeShippingOptionRoutesMiddlewares } from './shipping-options/middlewares'
+import { storeStyledTokenMiddlewares } from './styledtoken/middlewares'
 import { storeWishlistMiddlewares } from './wishlist/middlewares'
 
 export const storeMiddlewares: MiddlewareRoute[] = [
@@ -17,11 +18,16 @@ export const storeMiddlewares: MiddlewareRoute[] = [
     matcher: '/store/return-request/*',
     middlewares: [authenticate('customer', ['bearer', 'session'])]
   },
+  {
+    matcher: '/store/styledtoken/*',
+    middlewares: [authenticate('customer', ['bearer', 'session'])]
+  },
   ...storeCartsMiddlewares,
   ...storeOrderReturnRequestsMiddlewares,
   ...storeOrderSetMiddlewares,
   ...storeReviewMiddlewares,
   ...storeSellerMiddlewares,
   ...storeShippingOptionRoutesMiddlewares,
+  ...storeStyledTokenMiddlewares,
   ...storeWishlistMiddlewares
 ]
