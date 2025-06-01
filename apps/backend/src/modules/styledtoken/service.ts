@@ -1,15 +1,16 @@
 import { MedusaService } from '@medusajs/framework/utils'
-import { StyledToken, TokenTransaction } from './models'
+
+import { StyledToken, TokenConfig, TokenTransaction } from './models'
 
 class StyledTokenModuleService extends MedusaService({
   StyledToken,
-  TokenTransaction
+  TokenTransaction,
+  TokenConfig
 }) {
   async getCustomerTokenBalance(customerId: string) {
-    const tokenAccount = await this.retrieveStyledToken(
-      customerId,
-      { select: ['balance', 'total_earned', 'total_spent', 'status'] }
-    ).catch(() => null)
+    const tokenAccount = await this.retrieveStyledToken(customerId, {
+      select: ['balance', 'total_earned', 'total_spent', 'status']
+    }).catch(() => null)
 
     if (!tokenAccount) {
       return { balance: 0, total_earned: 0, total_spent: 0, status: 'inactive' }
@@ -29,9 +30,9 @@ class StyledTokenModuleService extends MedusaService({
     metadata?: Record<string, any>
   }) {
     // Get or create token account
-    let tokenAccount = await this.retrieveStyledToken(
-      data.customer_id
-    ).catch(() => null)
+    let tokenAccount = await this.retrieveStyledToken(data.customer_id).catch(
+      () => null
+    )
 
     if (!tokenAccount) {
       tokenAccount = await this.createStyledTokens({
@@ -75,9 +76,7 @@ class StyledTokenModuleService extends MedusaService({
     description: string
     metadata?: Record<string, any>
   }) {
-    const tokenAccount = await this.retrieveStyledToken(
-     data.customer_id 
-    )
+    const tokenAccount = await this.retrieveStyledToken(data.customer_id)
 
     if (!tokenAccount || tokenAccount.balance < data.amount) {
       throw new Error('Insufficient token balance')
@@ -113,6 +112,94 @@ class StyledTokenModuleService extends MedusaService({
         order: { created_at: 'DESC' }
       }
     )
+  }
+
+  async getTokenConfigs() {
+    return await this.listTokenConfigs(
+      {},
+      {
+        order: { config_type: 'ASC' }
+      }
+    )
+  }
+
+  async updateTokenConfig(
+    configType: string,
+    data: {
+      min_amount?: number
+      max_amount?: number
+      token_reward?: number
+      token_value?: number
+      is_enabled?: boolean
+    }
+  ) {
+    const existingConfig = await this.retrieveTokenConfig(
+      configType,
+      { select: ['id'] }
+    ).catch(() => null)
+
+    if (existingConfig) {
+      return await this.updateTokenConfigs({
+        id: existingConfig.id,
+        ...data,
+        updated_at: new Date()
+      })
+    } else {
+      return await this.createTokenConfigs({
+        config_type: configType as "purchase_reward_tier_1" | "purchase_reward_tier_2" | "token_value",
+        ...data
+      })
+    }
+  }
+
+  async calculatePurchaseReward(purchaseAmount: number) {
+    const configs = await this.getTokenConfigs()
+
+    // Find applicable tier
+    for (const config of configs) {
+      if (
+        config.config_type.startsWith('purchase_reward_tier') &&
+        config.is_enabled
+      ) {
+        const minAmount = Number(config.min_amount || 0)
+        const maxAmount = config.max_amount
+          ? Number(config.max_amount)
+          : Infinity
+
+        if (purchaseAmount >= minAmount && purchaseAmount <= maxAmount) {
+          return config.token_reward
+        }
+      }
+    }
+
+    return 0 // No reward if no tier matches
+  }
+
+  async awardPurchaseTokens(data: {
+    customer_id: string
+    purchase_amount: number
+    order_id: string
+    metadata?: Record<string, any>
+  }) {
+    const tokenReward = await this.calculatePurchaseReward(data.purchase_amount)
+
+    if (tokenReward <= 0) {
+      return null // No tokens to award
+    }
+
+    return await this.awardTokens({
+      customer_id: data.customer_id,
+      amount: tokenReward,
+      activity_type: 'purchase',
+      reference_id: data.order_id,
+      reference_type: 'order',
+      description: `Purchase reward for order ${data.order_id} (${data.purchase_amount})`,
+      metadata: {
+        ...data.metadata,
+        purchase_amount: data.purchase_amount,
+        reward_tier: tokenReward === 20 ? 'tier_1' : 'tier_2'
+      }
+    })
   }
 }
 
