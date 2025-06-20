@@ -1,7 +1,8 @@
-import Stripe from 'stripe'
+import Stripe from 'stripe';
+
 
 export const PaymentProviderKeys = {
-  CARD: 'card'
+  CARD: 'stripe-connect'
 }
 
 export type PaymentIntentOptions = Omit<
