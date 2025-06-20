@@ -25,8 +25,8 @@ const sortSellers = (sellers: VendorSeller[], order: string) => {
   const isDesc = order.startsWith('-')
 
   return [...sellers].sort((a, b) => {
-    const aValue: string | number | null | undefined = a[field]
-    const bValue: string | number | null | undefined = b[field]
+    let aValue: string | number | null | undefined = a[field]
+    let bValue: string | number | null | undefined = b[field]
 
     // Handle null/undefined values
     if (!aValue && aValue !== '') return isDesc ? -1 : 1
@@ -56,8 +56,8 @@ const sortOrders = (orders: any[], order: string) => {
   const isDesc = order.startsWith('-')
 
   return [...orders].sort((a, b) => {
-    const aValue: string | number | null | undefined = a[field]
-    const bValue: string | number | null | undefined = b[field]
+    let aValue: string | number | null | undefined = a[field]
+    let bValue: string | number | null | undefined = b[field]
 
     // Handle null/undefined values
     if (!aValue && aValue !== '') return isDesc ? -1 : 1
@@ -94,8 +94,8 @@ const sortProducts = (products: any[], order: string) => {
   const isDesc = order.startsWith('-')
 
   return [...products].sort((a, b) => {
-    const aValue: string | number | null | undefined = a[field]
-    const bValue: string | number | null | undefined = b[field]
+    let aValue: string | number | null | undefined = a[field]
+    let bValue: string | number | null | undefined = b[field]
 
     // Handle null/undefined values
     if (!aValue && aValue !== '') return isDesc ? -1 : 1
@@ -125,8 +125,8 @@ const sortCustomerGroups = (customerGroups: any[], order: string) => {
   const isDesc = order.startsWith('-')
 
   return [...customerGroups].sort((a, b) => {
-    const aValue: string | number | null | undefined = a[field]
-    const bValue: string | number | null | undefined = b[field]
+    let aValue: string | number | null | undefined = a[field]
+    let bValue: string | number | null | undefined = b[field]
 
     // Handle null/undefined values
     if (!aValue && aValue !== '') return isDesc ? -1 : 1

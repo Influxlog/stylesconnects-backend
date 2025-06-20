@@ -504,9 +504,8 @@ export async function createDefaultCommissionLevel(container: MedusaContainer) {
 }
 
 export async function createConfigurationRules(container: MedusaContainer) {
-  const configurationService = container.resolve<ConfigurationModuleService>(
-    CONFIGURATION_MODULE
-  )
+  const configurationService =
+    container.resolve<ConfigurationModuleService>(CONFIGURATION_MODULE)
 
   for (const [ruleType, isEnabled] of ConfigurationRuleDefaults) {
     const [existingRule] = await configurationService.listConfigurationRules({
