@@ -20,7 +20,8 @@ import {
   VendorGetReviewsParams,
   VendorGetSellerParams,
   VendorUpdateReview,
-  VendorUpdateSeller
+  VendorUpdateSeller,
+  VendorUpdateSellerBanking, // Add this import
 } from './validators'
 
 export const vendorSellersMiddlewares: MiddlewareRoute[] = [
@@ -104,6 +105,30 @@ export const vendorSellersMiddlewares: MiddlewareRoute[] = [
         entryPoint: sellerReview.entryPoint,
         filterField: 'review_id'
       })
+    ]
+  },
+  
+  // Add banking endpoints
+  {
+    method: ['GET'],
+    matcher: '/vendor/sellers/me/banking',
+    middlewares: [
+      validateAndTransformQuery(
+        VendorGetSellerParams,
+        vendorSellerQueryConfig.retrieve
+      )
+    ]
+  },
+  {
+    method: ['POST'],
+    matcher: '/vendor/sellers/me/banking',
+    middlewares: [
+  
+      validateAndTransformBody(VendorUpdateSellerBanking),
+      validateAndTransformQuery(
+        VendorGetSellerParams,
+        vendorSellerQueryConfig.retrieve
+      )
     ]
   }
 ]

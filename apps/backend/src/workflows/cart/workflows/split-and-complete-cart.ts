@@ -1,44 +1,20 @@
-import {
-  MathBN,
-  MedusaError,
-  Modules,
-  OrderStatus,
-  OrderWorkflowEvents
-} from '@medusajs/framework/utils'
-import { parallelize, transform, when } from '@medusajs/framework/workflows-sdk'
-import {
-  authorizePaymentSessionStep,
-  createOrdersStep,
-  createRemoteLinkStep,
-  emitEventStep,
-  reserveInventoryStep,
-  updateCartsStep,
-  useRemoteQueryStep,
-  validateCartPaymentsStep
-} from '@medusajs/medusa/core-flows'
-import { UsageComputedActions } from '@medusajs/types'
-import {
-  CartShippingMethodDTO,
-  CartWorkflowDTO
-} from '@medusajs/types/dist/cart'
-import {
-  WorkflowResponse,
-  createHook,
-  createWorkflow
-} from '@medusajs/workflows-sdk'
+import { MathBN, MedusaError, Modules, OrderStatus, OrderWorkflowEvents } from '@medusajs/framework/utils';
+import { parallelize, transform, when } from '@medusajs/framework/workflows-sdk';
+import { authorizePaymentSessionStep, createOrdersStep, createRemoteLinkStep, emitEventStep, reserveInventoryStep, updateCartsStep, useRemoteQueryStep, validateCartPaymentsStep } from '@medusajs/medusa/core-flows';
+import { UsageComputedActions } from '@medusajs/types';
+import { CartShippingMethodDTO, CartWorkflowDTO } from '@medusajs/types/dist/cart';
+import { WorkflowResponse, createHook, createWorkflow } from '@medusajs/workflows-sdk';
 
-import { MARKETPLACE_MODULE } from '../../../modules/marketplace'
-import { OrderSetWorkflowEvents } from '../../../modules/marketplace/types'
-import { SELLER_MODULE } from '../../../modules/seller'
-import { registerUsageStep } from '../../promotions/steps'
-import { createSplitOrderPaymentsStep } from '../../split-order-payment/steps'
-import { createOrderSetStep, validateCartShippingOptionsStep } from '../steps'
-import {
-  completeCartFields,
-  prepareConfirmInventoryInput,
-  prepareLineItemData,
-  prepareTaxLinesData
-} from '../utils'
+
+
+import { MARKETPLACE_MODULE } from '../../../modules/marketplace';
+import { OrderSetWorkflowEvents } from '../../../modules/marketplace/types';
+import { SELLER_MODULE } from '../../../modules/seller';
+import { registerUsageStep } from '../../promotions/steps';
+import { createSplitOrderPaymentsStep } from '../../split-order-payment/steps';
+import { createOrderSetStep, validateCartShippingOptionsStep } from '../steps';
+import { completeCartFields, prepareConfirmInventoryInput, prepareLineItemData, prepareTaxLinesData } from '../utils';
+
 
 type SplitAndCompleteCartWorkflowInput = {
   id: string
@@ -230,11 +206,18 @@ export const splitAndCompleteCartWorkflow = createWorkflow(
 
       registerUsageStep(promotionUsage)
 
+      if (!cart.payment_collection?.id) {
+        throw new MedusaError(
+          MedusaError.Types.INVALID_DATA,
+          'Cart must have a payment collection before completing'
+        )
+      }
+
       const orderSet = createOrderSetStep({
         cart_id: cart.id,
         customer_id: cart.customer_id,
         sales_channel_id: cart.sales_channel_id,
-        payment_collection_id: payment.payment_collection_id
+        payment_collection_id: cart.payment_collection.id // ✅ Fixed: access nested property
       })
 
       const createdOrders = createOrdersStep(ordersToCreate)
@@ -321,7 +304,7 @@ export const splitAndCompleteCartWorkflow = createWorkflow(
               order_id: order.id
             },
             [Modules.PAYMENT]: {
-              payment_collection_id: cart.payment_collection.id
+              payment_collection_id: cart.payment_collection.id  // ✅ This is correct
             }
           }))
 

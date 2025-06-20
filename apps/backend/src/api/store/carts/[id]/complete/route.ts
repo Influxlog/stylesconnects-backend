@@ -1,11 +1,16 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
 
-import { splitAndCompleteCartWorkflow } from '../../../../../workflows/cart/workflows'
+import {
+  splitAndCompleteCartWorkflow
+} from '../../../../../workflows/cart/workflows'
 import { getFormattedOrderSetListWorkflow } from '../../../../../workflows/order-set/workflows'
 
 export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
   const cart_id = req.params.id
 
+  // await initializeCartPaymentWorkflow(req.scope).run({
+  //   input: { cart_id }
+  // })
   const { result } = await splitAndCompleteCartWorkflow(req.scope).run({
     input: { id: cart_id },
     context: { transactionId: cart_id }
