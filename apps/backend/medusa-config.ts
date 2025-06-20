@@ -58,6 +58,14 @@ module.exports = defineConfig({
             options: {
               apiKey: process.env.STRIPE_SECRET_API_KEY
             }
+          },
+          {
+            resolve: './src/modules/payment-paystack',
+            id: 'paystack',
+            options: {
+              secretKey: process.env.PAYSTACK_SECRET_KEY,
+              publicKey: process.env.PAYSTACK_PUBLIC_KEY,
+            }
           }
         ]
       }

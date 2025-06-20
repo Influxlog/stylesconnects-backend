@@ -173,7 +173,18 @@ export const VendorUpdateSeller = z
     state: z.string().optional(),
     postal_code: z.string().optional(),
     country_code: z.string().optional(),
-    tax_id: z.string().optional()
+    tax_id: z.string().optional(),
+    // Add Paystack fields
+    paystack_subaccount_code: z.string().optional(),
+    paystack_subaccount_id: z.string().optional(),
+    banking_info: z
+      .object({
+        bank_name: z.string(),
+        account_number: z.string(),
+        account_name: z.string(),
+        bank_code: z.string()
+      })
+      .optional(),
   })
   .strict()
 
@@ -204,3 +215,55 @@ export type VendorGetOnboardingParamsType = z.infer<
   typeof VendorGetOnboardingParams
 >
 export const VendorGetOnboardingParams = createSelectParams()
+
+/**
+ * @schema VendorUpdateSellerBanking
+ * title: "Update Seller Banking Details"
+ * description: "A schema for updating seller Paystack banking information."
+ * x-resourceId: VendorUpdateSellerBanking
+ * type: object
+ * properties:
+ *   paystack_subaccount_code:
+ *     type: string
+ *     nullable: true
+ *     description: Paystack subaccount code for split payments.
+ *   paystack_subaccount_id:
+ *     type: string
+ *     nullable: true
+ *     description: Paystack subaccount ID.
+ *   banking_info:
+ *     type: object
+ *     nullable: true
+ *     description: Banking information for payouts.
+ *     properties:
+ *       bank_name:
+ *         type: string
+ *         description: Name of the bank.
+ *       account_number:
+ *         type: string
+ *         description: Bank account number.
+ *       account_name:
+ *         type: string
+ *         description: Account holder name.
+ *       bank_code:
+ *         type: string
+ *         description: Bank code.
+ */
+export type VendorUpdateSellerBankingType = z.infer<
+  typeof VendorUpdateSellerBanking
+>
+export const VendorUpdateSellerBanking = z
+  .object({
+    paystack_subaccount_code: z.string().optional(),
+    paystack_subaccount_id: z.string().optional(),
+    banking_info: z
+      .object({
+        bank_name: z.string(),
+        account_number: z.string(),
+        account_name: z.string(),
+        bank_code: z.string()
+      })
+      .optional(),
+    percentage_charge: z.number().min(0).max(100).optional()
+  })
+  .strict()

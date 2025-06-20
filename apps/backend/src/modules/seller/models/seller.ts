@@ -18,6 +18,10 @@ export const Seller = model.define('seller', {
   postal_code: model.text().nullable(),
   country_code: model.text().nullable(),
   tax_id: model.text().nullable(),
+  // Add Paystack subaccount information
+  paystack_subaccount_code: model.text().nullable(),
+  paystack_subaccount_id: model.text().nullable(),
+  banking_info: model.json().nullable(), // Store bank details
   members: model.hasMany(() => Member),
   invites: model.hasMany(() => MemberInvite),
   onboarding: model.hasOne(() => SellerOnboarding).nullable()
