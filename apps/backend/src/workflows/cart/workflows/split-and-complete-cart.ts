@@ -1,20 +1,48 @@
-import { MathBN, MedusaError, Modules, OrderStatus, OrderWorkflowEvents } from '@medusajs/framework/utils';
-import { parallelize, transform, when } from '@medusajs/framework/workflows-sdk';
-import { authorizePaymentSessionStep, createOrdersStep, createRemoteLinkStep, emitEventStep, reserveInventoryStep, updateCartsStep, useRemoteQueryStep, validateCartPaymentsStep } from '@medusajs/medusa/core-flows';
-import { UsageComputedActions } from '@medusajs/types';
-import { CartShippingMethodDTO, CartWorkflowDTO } from '@medusajs/types/dist/cart';
-import { WorkflowResponse, createHook, createWorkflow } from '@medusajs/workflows-sdk';
+import {
+  MathBN,
+  MedusaError,
+  Modules,
+  OrderStatus,
+  OrderWorkflowEvents
+} from '@medusajs/framework/utils'
+import { parallelize, transform, when } from '@medusajs/framework/workflows-sdk'
+import {
+  authorizePaymentSessionStep,
+  createOrdersStep,
+  createRemoteLinkStep,
+  emitEventStep,
+  reserveInventoryStep,
+  updateCartsStep,
+  useRemoteQueryStep,
+  validateCartPaymentsStep
+} from '@medusajs/medusa/core-flows'
+import { UsageComputedActions } from '@medusajs/types'
+import {
+  CartShippingMethodDTO,
+  CartWorkflowDTO
+} from '@medusajs/types/dist/cart'
+import {
+  WorkflowResponse,
+  createHook,
+  createWorkflow
+} from '@medusajs/workflows-sdk'
 
-
-
-import { MARKETPLACE_MODULE } from '../../../modules/marketplace';
-import { OrderSetWorkflowEvents } from '../../../modules/marketplace/types';
-import { SELLER_MODULE } from '../../../modules/seller';
-import { registerUsageStep } from '../../promotions/steps';
-import { createSplitOrderPaymentsStep } from '../../split-order-payment/steps';
-import { createOrderSetStep, validateCartShippingOptionsStep } from '../steps';
-import { completeCartFields, prepareConfirmInventoryInput, prepareLineItemData, prepareTaxLinesData } from '../utils';
-
+import { MARKETPLACE_MODULE } from '../../../modules/marketplace'
+import { OrderSetWorkflowEvents } from '../../../modules/marketplace/types'
+import { SELLER_MODULE } from '../../../modules/seller'
+import { registerUsageStep } from '../../promotions/steps'
+import { createSplitOrderPaymentsStep } from '../../split-order-payment/steps'
+import {
+  createOrderSetStep,
+  validateCartSellersStep,
+  validateCartShippingOptionsStep
+} from '../steps'
+import {
+  completeCartFields,
+  prepareConfirmInventoryInput,
+  prepareLineItemData,
+  prepareTaxLinesData
+} from '../utils'
 
 type SplitAndCompleteCartWorkflowInput = {
   id: string
@@ -48,6 +76,12 @@ export const splitAndCompleteCartWorkflow = createWorkflow(
         },
         list: false
       }).config({ name: 'cart-query' })
+
+      validateCartSellersStep(
+        transform({ cart }, ({ cart }) => ({
+          line_items: cart.items
+        }))
+      )
 
       const validateCartShippingOptionsInput = transform(
         { cart },
@@ -304,7 +338,7 @@ export const splitAndCompleteCartWorkflow = createWorkflow(
               order_id: order.id
             },
             [Modules.PAYMENT]: {
-              payment_collection_id: cart.payment_collection.id  // ✅ This is correct
+              payment_collection_id: cart.payment_collection.id // ✅ This is correct
             }
           }))
 
