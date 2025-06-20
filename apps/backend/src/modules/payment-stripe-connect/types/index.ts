@@ -18,3 +18,4 @@ export const ErrorIntentStatus = {
   SUCCEEDED: 'succeeded',
   CANCELED: 'canceled'
 }
+
