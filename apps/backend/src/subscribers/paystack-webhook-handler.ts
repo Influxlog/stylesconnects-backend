@@ -6,7 +6,14 @@ export default async function paystackWebhookHandler({
   event,
   container
 }: SubscriberArgs<{ event: string; data: any }>) {
+  // Add console.log to debug the entire event
+  console.log('Paystack webhook received:', JSON.stringify(event.data, null, 2))
+  
   const { event: eventType, data } = event.data
+  
+  // Also log the specific event type and data
+  console.log('Event type:', eventType)
+  console.log('Event data:', JSON.stringify(data, null, 2))
 
   switch (eventType) {
     case 'charge.success': { // Handle successful payment
