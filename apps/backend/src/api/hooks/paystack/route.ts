@@ -9,11 +9,13 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       name: 'paystack.webhook.received',
       data: {
         event: (req.body as any).event,
-        data: (req.body as any).data
+        data: (req.body as any).data,
+        rawData: req.rawBody, // Add this
+        headers: req.headers   // Add this
       }
     },
     {
-      delay: 0, // Process immediately
+      delay: 0,
       attempts: 3
     }
   )
