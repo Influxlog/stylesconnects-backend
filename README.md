@@ -1,9 +1,70 @@
-
-## Updating the Project
+<div align="center">
+  <h1>Mercur <br> Open Source Marketplace Platform</h1> 
+  <!-- Shields.io Badges -->
+  <a href="https://github.com/mercurjs/mercur/tree/main?tab=MIT-1-ov-file">
+    <img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" />
+  </a>
+  <a href="#">
+    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
+  </a>
+  <a href="https://rigbyjs.com/#contact">
+    <img alt="Support" src="https://img.shields.io/badge/support-contact%20author-blueviolet.svg" />
+  </a>
+  <!-- Website Links -->
+  <p>
+    <a href="https://mercurjs.com/">Mercur</a> |   <a href="https://docs.mercurjs.com/">Docs</a> 
+  </p> 
+</div>
 
 To update the project with the latest changes from the upstream repository, you can run the `update-project.sh` script. This script will fetch the latest updates, merge them into your main branch, and push the changes to your GitHub repository.
 
-To run the script, navigate to the project's root directory in your terminal and execute the following command:
+<a href="https://www.mercurjs.com/">Mercur</a> is the first truly limitless open source marketplace platform that combines the simplicity of SaaS with the freedom of open source. Built on [MedusaJS](https://github.com/medusajs/medusa), it empowers businesses to create custom marketplaces without choosing between ownership and ease of use.
+
+
+After months of development, testing, and close collaboration with early adopters, we’re excited to announce the official release of **Mercur 1.0** - the first truly limitless marketplace platform. Version 1.0 is fully open source and ready to be self-hosted, giving you **full control over infrastructure, customizations, and data**.
+
+With this version, **Mercur is production-ready for B2C marketplaces**. The first complete version includes a vendor system, admin panel, and a fully built B2C Storefront. Read more in **[official release announcement](https://www.mercurjs.com/updates/mercur-1-0-release)**
+
+## Why Choose Mercur?
+
+- Full Ownership: Unlike SaaS platforms, you own your marketplace with no transaction fees or vendor lock-in
+- Modern Foundation: Built on MedusaJS, offering a modern tech stack that developers love
+- Beautiful by Default: Create stunning storefronts without sacrificing customization
+
+## Power Any Marketplace Model
+
+- Custom B2B Marketplace: Build enterprise-grade platforms with specialized workflows
+- Custom B2C Marketplace: Create engaging consumer marketplaces with modern UX
+- eCommerce Extension: Transform your store into a marketplace (coming soon)
+
+![Mercur Use Cases](https://cdn.prod.website-files.com/6790aeffc4b432ccaf1b56e5/67b46aa08180d5b8499c6a15_Use-cases.jpg)
+&nbsp;
+
+# Ready-to-go marketplace features
+
+<b>Storefronts for Marketplace </b> <br>
+Customizable storefronts designed for B2B and B2C with all elements including browsing and buying products across multiple vendors at once.
+
+Discover <a href="https://github.com/mercurjs/b2c-marketplace-storefront">B2C Storefront Repository</a> - <a href="https://b2c.mercurjs.com/">🛍️ Check demo </a>
+
+<b>Admin Panel</b> <br>
+Control over whole marketplace: setting product categories, vendors, commissions and rules
+
+<b>Vendor Panel</b> <br>
+A powerful dashboard giving sellers complete control over their products, orders, and store management in one intuitive interface.
+
+Discover <a href="https://github.com/mercurjs/vendor-panel">Vendor Panel</a> - <a href="https://www.mercurjs.com/contact"> Contact us to get demo </a>
+
+<b>Integrations</b> <br>
+Built-in integration with Stripe for payments and Resend for communication needs. More integrations coming soon.
+
+![Mercur](https://cdn.prod.website-files.com/6790aeffc4b432ccaf1b56e5/67a1020f202572832c954ead_6b96703adfe74613f85133f83a19b1f0_Fleek%20Tilt%20-%20Readme.png)
+
+&nbsp;
+
+## Quickstart
+
+#### Setup Medusa project
 
 ```bash
 bash update-project.sh
