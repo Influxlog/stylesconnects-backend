@@ -22,7 +22,8 @@ export const Seller = model.define('seller', {
   tax_id: model.text().nullable(),
   // Add Paystack subaccount information
   paystack_subaccount_code: model.text().nullable(),
-  paystack_subaccount_id: model.text().nullable(),
+  // Add missing Paystack transfer recipient fields
+  paystack_recipient_code: model.text().nullable(),
   banking_info: model.json().nullable(), // Store bank details
   members: model.hasMany(() => Member),
   invites: model.hasMany(() => MemberInvite),

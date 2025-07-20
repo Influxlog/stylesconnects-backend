@@ -49,6 +49,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "0",
           "mappedType": "decimal"
         },
         "refunded_amount": {
@@ -58,10 +59,20 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "0",
           "mappedType": "decimal"
         },
         "payment_collection_id": {
           "name": "payment_collection_id",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "text"
+        },
+        "seller_id": {
+          "name": "seller_id",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,

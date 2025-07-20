@@ -23,6 +23,10 @@ export type SellerDTO = {
   tax_id: string | null
   handle: string
   photo: string | null
+  // Add missing Paystack fields
+  paystack_recipient_code?: string | null
+  paystack_recipient_id?: string | null
+  banking_info?: any | null
   members?: Partial<MemberDTO>[]
 }
 
