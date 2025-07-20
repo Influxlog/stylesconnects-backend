@@ -1,8 +1,8 @@
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { DeleteWishlistDTO } from '@mercurjs/framework'
-import { WISHLIST_MODULE } from '@mercurjs/wishlist'
+import { WISHLIST_MODULE } from '../../../modules/wishlist'
+import { DeleteWishlistDTO } from '../../../modules/wishlist/types/mutations'
 
 export const deleteWishlistEntryStep = createStep(
   'delete-wishlist',

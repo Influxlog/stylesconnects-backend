@@ -1,9 +1,12 @@
 import { Modules } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { COMMISSION_MODULE } from '@mercurjs/commission'
-import { CommissionModuleService } from '@mercurjs/commission'
-import { CommissionRuleDTO, CreateCommissionRuleDTO } from '@mercurjs/framework'
+import { COMMISSION_MODULE } from '../../../modules/commission'
+import CommissionModuleService from '../../../modules/commission/service'
+import {
+  CommissionRuleDTO,
+  CreateCommissionRuleDTO
+} from '../../../modules/commission/types'
 
 export const createCommissionRuleStep = createStep(
   'create-commission-rule',

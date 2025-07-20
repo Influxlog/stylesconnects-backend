@@ -2,8 +2,10 @@ import { toHandle } from '@medusajs/framework/utils'
 import { Modules } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { SellerDTO, SellerEvents, UpdateSellerDTO } from '@mercurjs/framework'
-import { SELLER_MODULE, SellerModuleService } from '@mercurjs/seller'
+import { SELLER_MODULE } from '../../../modules/seller'
+import SellerModuleService from '../../../modules/seller/service'
+import { SellerDTO, UpdateSellerDTO } from '../../../modules/seller/types'
+import { SellerEvents } from '../../../modules/seller/types/events'
 
 export const updateSellerStep = createStep(
   'update-seller',

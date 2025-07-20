@@ -5,7 +5,7 @@ import {
 } from '@medusajs/framework/types'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 
-import { PayoutWorkflowEvents } from '@mercurjs/framework'
+import { PayoutWorkflowEvents } from '../modules/payout/types'
 
 const BATCH_SIZE = 100
 const RETRY_COUNT = 3

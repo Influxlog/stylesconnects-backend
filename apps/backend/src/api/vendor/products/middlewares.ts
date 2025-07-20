@@ -9,9 +9,8 @@ import {
 import { MiddlewareRoute } from '@medusajs/medusa'
 import { maybeApplyPriceListsFilter } from '@medusajs/medusa/api/admin/products/utils/index'
 
-import { ConfigurationRuleType } from '@mercurjs/framework'
-
 import sellerProductLink from '../../../links/seller-product'
+import { ConfigurationRuleType } from '../../../modules/configuration/types'
 import {
   checkResourceOwnershipByResourceId,
   filterBySellerId

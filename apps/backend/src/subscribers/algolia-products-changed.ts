@@ -1,12 +1,12 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 
-import { ALGOLIA_MODULE, AlgoliaModuleService } from '@mercurjs/algolia'
-import { AlgoliaEvents, IndexType } from '@mercurjs/framework'
-
+import { ALGOLIA_MODULE } from '../modules/algolia'
+import AlgoliaModuleService from '../modules/algolia/service'
+import { AlgoliaEvents, IndexType } from '../modules/algolia/types'
 import {
   filterProductsByStatus,
   findAndTransformAlgoliaProducts
-} from '../subscribers/utils'
+} from '../modules/algolia/utils'
 
 export default async function productsChangedHandler({
   event,

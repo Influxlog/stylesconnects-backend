@@ -17,32 +17,33 @@ module.exports = defineConfig({
     }
   },
   modules: [
-    { resolve: '@mercurjs/seller' },
-    { resolve: '@mercurjs/reviews' },
-    { resolve: '@mercurjs/marketplace' },
-    { resolve: '@mercurjs/configuration' },
-    { resolve: '@mercurjs/order-return-request' },
-    { resolve: '@mercurjs/requests' },
-    { resolve: '@mercurjs/brand' },
-    { resolve: '@mercurjs/wishlist' },
-    { resolve: '@mercurjs/split-order-payment' },
-    { resolve: '@mercurjs/attribute' },
+    { resolve: './src/modules/seller' },
+    { resolve: './src/modules/marketplace' },
+    { resolve: './src/modules/configuration' },
+    { resolve: './src/modules/order-return-request' },
+    { resolve: './src/modules/requests' },
+    { resolve: './src/modules/reviews' },
+    { resolve: './src/modules/brand' },
+    { resolve: './src/modules/wishlist' },
+    { resolve: './src/modules/styledtoken' },
+    { resolve: './src/modules/split-order-payment' },
+    { resolve: './src/modules/attribute' },
     {
-      resolve: '@mercurjs/taxcode',
+      resolve: './src/modules/taxcode',
       options: {
         apiKey: process.env.STRIPE_SECRET_API_KEY
       }
     },
-    { resolve: '@mercurjs/commission' },
+    { resolve: './src/modules/commission' },
     {
-      resolve: '@mercurjs/payout',
+      resolve: './src/modules/payout',
       options: {
         apiKey: process.env.STRIPE_SECRET_API_KEY,
         webhookSecret: process.env.STRIPE_CONNECTED_ACCOUNTS_WEBHOOK_SECRET
       }
     },
     {
-      resolve: '@mercurjs/algolia',
+      resolve: './src/modules/algolia',
       options: {
         apiKey: process.env.ALGOLIA_API_KEY,
         appId: process.env.ALGOLIA_APP_ID
@@ -53,7 +54,7 @@ module.exports = defineConfig({
       options: {
         providers: [
           {
-            resolve: '@mercurjs/payment-stripe-connect',
+            resolve: './src/modules/payment-stripe-connect',
             id: 'stripe-connect',
             options: {
               apiKey: process.env.STRIPE_SECRET_API_KEY
@@ -76,7 +77,7 @@ module.exports = defineConfig({
       options: {
         providers: [
           {
-            resolve: '@mercurjs/resend',
+            resolve: './src/modules/resend',
             id: 'resend',
             options: {
               channels: ['email'],

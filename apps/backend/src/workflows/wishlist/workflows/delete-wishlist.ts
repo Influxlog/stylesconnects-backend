@@ -3,8 +3,7 @@ import {
   createWorkflow
 } from '@medusajs/framework/workflows-sdk'
 
-import { DeleteWishlistDTO } from '@mercurjs/framework'
-
+import { DeleteWishlistDTO } from '../../../modules/wishlist/types/mutations'
 import { deleteWishlistEntryStep } from '../steps'
 
 export const deleteWishlistEntryWorkflow = createWorkflow(

@@ -4,7 +4,7 @@ import {
   MedusaError
 } from '@medusajs/framework/utils'
 
-import { getRequestWorkflowByType } from '../../../../workflows/requests/utils/select-workflow'
+import RequestsModuleService from '../../../../modules/requests/service'
 import { updateRequestWorkflow } from '../../../../workflows/requests/workflows'
 import { AdminReviewRequestType } from '../validators'
 
@@ -85,7 +85,7 @@ export async function POST(
     })
   }
 
-  const workflow = getRequestWorkflowByType(request.type)
+  const workflow = RequestsModuleService.getWorkflowByType(request.type)
 
   if (!workflow) {
     throw new MedusaError(

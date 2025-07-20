@@ -1,8 +1,7 @@
 import { MedusaRequest, MedusaResponse } from '@medusajs/framework'
 
-import { COMMISSION_MODULE } from '@mercurjs/commission'
-import { CommissionModuleService } from '@mercurjs/commission'
-
+import { COMMISSION_MODULE } from '../../../../modules/commission'
+import CommissionModuleService from '../../../../modules/commission/service'
 import { listCommissionRulesWorkflow } from '../../../../workflows/commission/workflows'
 
 export async function GET(

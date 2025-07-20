@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 
-import { AttributeUIComponent } from '@mercurjs/framework'
+import { AttributeUIComponent } from '../../../modules/attribute/types'
 
 export type VendorGetAttributesParamsType = z.infer<
   typeof VendorGetAttributesParams

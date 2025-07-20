@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 
-import { MemberRole } from '@mercurjs/framework'
+import { MemberRole } from '../../../modules/seller/types'
 
 export type VendorGetMemberInviteParamsType = z.infer<
   typeof VendorGetMemberInviteParams

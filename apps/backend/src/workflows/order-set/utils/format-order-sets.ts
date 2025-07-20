@@ -10,8 +10,7 @@ import {
   FormattedOrderSetDTO,
   OrderSetDTO,
   OrderSetWithOrdersDTO
-} from '@mercurjs/framework'
-
+} from '../../../modules/marketplace/types'
 import { getLastFulfillmentStatus } from '../../order/utils/aggregate-status'
 
 export const formatOrderSets = (

@@ -5,7 +5,7 @@ import {
   OrderWorkflowEvents
 } from '@medusajs/framework/utils'
 
-import { ResendNotificationTemplates } from '@mercurjs/resend'
+import { ResendNotificationTemplates } from '../modules/resend/types/templates'
 
 export default async function sellerNewOrderHandler({
   event,

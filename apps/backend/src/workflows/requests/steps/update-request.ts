@@ -1,7 +1,8 @@
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { UpdateRequestDTO } from '@mercurjs/framework'
-import { REQUESTS_MODULE, RequestsModuleService } from '@mercurjs/requests'
+import { REQUESTS_MODULE } from '../../../modules/requests'
+import RequestsModuleService from '../../../modules/requests/service'
+import { UpdateRequestDTO } from '../../../modules/requests/types'
 
 export const updateRequestStep = createStep(
   'update-request',

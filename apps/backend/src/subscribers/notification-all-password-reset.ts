@@ -1,8 +1,7 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { AuthWorkflowEvents, Modules } from '@medusajs/framework/utils'
 
-import { ResendNotificationTemplates } from '@mercurjs/resend'
-
+import { ResendNotificationTemplates } from '../modules/resend/types/templates'
 import {
   actorTypeToHost,
   buildResetPasswordUrl

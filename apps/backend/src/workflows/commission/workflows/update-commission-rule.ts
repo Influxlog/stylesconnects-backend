@@ -1,7 +1,6 @@
 import { WorkflowResponse, createWorkflow } from '@medusajs/workflows-sdk'
 
-import { UpdateCommissionRuleDTO } from '@mercurjs/framework'
-
+import { UpdateCommissionRuleDTO } from '../../../modules/commission/types'
 import { updateCommissionRuleStep } from '../steps'
 
 export const updateCommissionRuleWorkflow = createWorkflow(

@@ -9,9 +9,8 @@ import {
   useQueryGraphStep
 } from '@medusajs/medusa/core-flows'
 
-import { ATTRIBUTE_MODULE } from '@mercurjs/attribute'
-
 import productAttributeValue from '../../../links/product-attribute-value'
+import { ATTRIBUTE_MODULE } from '../../../modules/attribute'
 import { deleteAttributeValueStep } from '../steps'
 
 export const deleteAttributeValueWorkflowId = 'delete-attribute-value'

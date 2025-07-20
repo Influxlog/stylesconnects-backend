@@ -1,7 +1,8 @@
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { ATTRIBUTE_MODULE, AttributeModuleService } from '@mercurjs/attribute'
-import { UpdateAttributeValueDTO } from '@mercurjs/framework'
+import { ATTRIBUTE_MODULE } from '../../../modules/attribute'
+import AttributeModuleService from '../../../modules/attribute/service'
+import { UpdateAttributeValueDTO } from '../../../modules/attribute/types'
 
 export const updateAttributePossibleValueStepId =
   'update-attribute-possible-value'

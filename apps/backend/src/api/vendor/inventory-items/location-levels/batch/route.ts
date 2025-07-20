@@ -2,8 +2,7 @@ import { batchInventoryItemLevelsWorkflow } from '@medusajs/core-flows'
 import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
 import { Modules } from '@medusajs/framework/utils'
 
-import { IntermediateEvents } from '@mercurjs/framework'
-
+import { IntermediateEvents } from '../../../../../modules/algolia/types'
 import { fetchSellerByAuthActorId } from '../../../../../shared/infra/http/utils'
 import { validateOwnership } from '../../utils'
 import { VendorBatchInventoryItemLevelsType } from '../../validators'

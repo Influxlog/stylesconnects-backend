@@ -9,7 +9,7 @@ import {
   transform
 } from '@medusajs/workflows-sdk'
 
-import { SELLER_MODULE } from '@mercurjs/seller'
+import { SELLER_MODULE } from '../../../modules/seller'
 
 type WorkflowInput = {
   name: string

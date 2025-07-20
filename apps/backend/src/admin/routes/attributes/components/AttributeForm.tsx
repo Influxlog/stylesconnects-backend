@@ -9,20 +9,11 @@ import {
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AttributeDTO } from "@mercurjs/framework";
+import { AttributeDTO, AttributeUIComponent } from "../../../../modules/attribute/types";
 import { AdminUpdateAttribute, CreateAttribute } from "../../../../api/admin/attributes/validators";
 import { AdminProductCategory } from "@medusajs/types";
 import PossibleValuesList from "../create/components/PossibleValuesList";
 import MultiSelectCategory from "../create/components/MultiSelectCategory";
-
-enum AttributeUIComponent {
-  SELECT = 'select',
-  MULTIVALUE = 'multivalue',
-  UNIT = 'unit',
-  TOGGLE = 'toggle',
-  TEXTAREA = 'text_area',
-  COLOR_PICKER = 'color_picker'
-}
 
 export const CreateAttributeFormSchema = CreateAttribute;
 
