@@ -6,4 +6,5 @@ export type SplitOrderPaymentDTO = {
   captured_amount: number
   refunded_amount: number
   payment_collection_id: string
+  seller_id: string // Add this field
 }

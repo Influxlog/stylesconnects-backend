@@ -7,5 +7,6 @@ export const SplitOrderPayment = model.define('split_order_payment', {
   authorized_amount: model.bigNumber(),
   captured_amount: model.bigNumber().default(0),
   refunded_amount: model.bigNumber().default(0),
-  payment_collection_id: model.text()
+  payment_collection_id: model.text(),
+  seller_id: model.text()
 })

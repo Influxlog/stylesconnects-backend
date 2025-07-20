@@ -187,8 +187,8 @@ export const POST = async (
     paystack_subaccount_code: updatedSeller.paystack_subaccount_code,
     paystack_subaccount_id: updatedSeller.paystack_subaccount_id,
     subaccount_status: {
-      active: result.subaccount.is_verified,
-      is_verified: result.subaccount.is_verified
+      active: result.transfer_recipient ? true : false,
+      is_verified: result.transfer_recipient ? true : false
     }
   })
 }

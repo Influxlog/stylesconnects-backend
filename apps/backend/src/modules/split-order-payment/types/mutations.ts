@@ -4,6 +4,7 @@ export type CreateSplitOrderPaymentsDTO = {
   currency_code: string
   authorized_amount: number
   payment_collection_id: string
+  seller_id: string // Add this field
 }
 
 export type UpdateSplitOrderPaymentsDTO = {
