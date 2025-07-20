@@ -15,9 +15,8 @@ import {
   refundPaymentsStep
 } from '@medusajs/medusa/core-flows'
 
-import { RefundSplitOrderPaymentsDTO } from '@mercurjs/framework'
-
 import orderSplitOrderPayment from '../../../links/order-split-order-payment'
+import { RefundSplitOrderPaymentsDTO } from '../../../modules/split-order-payment/types'
 
 export const selectAndValidatePaymentRefundStep = createStep(
   'select-and-validate-payment-refund-step',

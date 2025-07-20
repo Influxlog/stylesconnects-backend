@@ -1,9 +1,9 @@
 import { BigNumberInput } from '@medusajs/framework/types'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { PayoutDTO } from '@mercurjs/framework'
-import { PAYOUT_MODULE } from '@mercurjs/payout'
-import { PayoutModuleService } from '@mercurjs/payout'
+import { PAYOUT_MODULE } from '../../../modules/payout'
+import PayoutModuleService from '../../../modules/payout/service'
+import { PayoutDTO } from '../../../modules/payout/types'
 
 type CreatePayoutReversalStepInput = {
   payout_id: string | null

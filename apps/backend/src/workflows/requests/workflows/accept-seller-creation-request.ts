@@ -1,7 +1,6 @@
 import { WorkflowResponse, createWorkflow } from '@medusajs/workflows-sdk'
 
-import { AcceptRequestDTO } from '@mercurjs/framework'
-
+import { AcceptRequestDTO } from '../../../modules/requests/types'
 import { createSellerWorkflow } from '../../seller/workflows'
 import { updateRequestWorkflow } from './update-request'
 

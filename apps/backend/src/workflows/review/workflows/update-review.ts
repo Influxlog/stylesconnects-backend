@@ -4,8 +4,8 @@ import {
 } from '@medusajs/framework/workflows-sdk'
 import { emitEventStep } from '@medusajs/medusa/core-flows'
 
-import { AlgoliaEvents, UpdateReviewDTO } from '@mercurjs/framework'
-
+import { AlgoliaEvents } from '../../../modules/algolia/types'
+import { UpdateReviewDTO } from '../../../modules/reviews/types'
 import { updateReviewStep } from '../steps'
 
 export const updateReviewWorkflow = createWorkflow(

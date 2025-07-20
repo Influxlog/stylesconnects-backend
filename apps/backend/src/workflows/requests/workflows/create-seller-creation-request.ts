@@ -4,8 +4,7 @@ import {
   CreateRequestDTO,
   RequestUpdated,
   SellerRequest
-} from '@mercurjs/framework'
-
+} from '../../../modules/requests/types'
 import { emitMultipleEventsStep } from '../../common/steps'
 import { createRequestStep } from '../steps'
 

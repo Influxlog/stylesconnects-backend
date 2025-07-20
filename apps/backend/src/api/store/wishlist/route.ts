@@ -5,9 +5,8 @@ import {
 } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
-import { calculateWishlistProductsPrice } from '@mercurjs/wishlist'
-
 import customerWishlist from '../../../links/customer-wishlist'
+import { calculateWishlistProductsPrice } from '../../../modules/wishlist/utils'
 import { createWishlistEntryWorkflow } from '../../../workflows/wishlist/workflows'
 import { StoreCreateWishlistType } from './validators'
 

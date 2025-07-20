@@ -1,6 +1,7 @@
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { REVIEW_MODULE, ReviewModuleService } from '@mercurjs/reviews'
+import { REVIEW_MODULE } from '../../../modules/reviews'
+import ReviewModuleService from '../../../modules/reviews/service'
 
 export const deleteReviewStep = createStep(
   'delete-review',

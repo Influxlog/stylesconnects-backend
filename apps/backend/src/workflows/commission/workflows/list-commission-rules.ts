@@ -4,8 +4,7 @@ import {
   transform
 } from '@medusajs/workflows-sdk'
 
-import { AdminCommissionAggregate } from '@mercurjs/framework'
-
+import { AdminCommissionAggregate } from '../../../modules/commission/types'
 import { findCommissionRulesStep } from '../steps'
 import { findCommissionReferencesStep } from '../steps/find-commission-references'
 

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 
-import { ConfigurationRuleType } from '@mercurjs/framework'
+import { ConfigurationRuleType } from '../../../modules/configuration/types'
 
 export type AdminGetRulesParamsType = z.infer<typeof AdminGetRulesParams>
 export const AdminGetRulesParams = createFindParams({

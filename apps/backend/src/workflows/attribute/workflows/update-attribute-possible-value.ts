@@ -3,8 +3,7 @@ import {
   createWorkflow
 } from '@medusajs/framework/workflows-sdk'
 
-import { UpdateAttributeValueDTO } from '@mercurjs/framework'
-
+import { UpdateAttributeValueDTO } from '../../../modules/attribute/types'
 import { updateAttributePossibleValueStep } from '../steps'
 
 export const updateAttributePossibleValueWorkflowId =

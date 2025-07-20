@@ -1,17 +1,17 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
-import { ALGOLIA_MODULE, AlgoliaModuleService } from '@mercurjs/algolia'
-import { ReviewDTO } from '@mercurjs/framework'
+import productReview from '../links/product-review'
+import sellerReview from '../links/seller-review'
+import { ALGOLIA_MODULE } from '../modules/algolia'
+import AlgoliaModuleService from '../modules/algolia/service'
 import {
   AlgoliaEvents,
   AlgoliaReviewValidator,
   IndexType
-} from '@mercurjs/framework'
-import { getAvgRating } from '@mercurjs/reviews'
-
-import productReview from '../links/product-review'
-import sellerReview from '../links/seller-review'
+} from '../modules/algolia/types'
+import { ReviewDTO } from '../modules/reviews/types'
+import { getAvgRating } from '../modules/reviews/utils'
 
 export default async function reviewChangedHandler({
   event,

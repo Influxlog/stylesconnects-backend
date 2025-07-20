@@ -7,9 +7,8 @@ import {
 } from '@medusajs/medusa/core-flows'
 import { createWorkflow } from '@medusajs/workflows-sdk'
 
-import { PayoutWorkflowEvents } from '@mercurjs/framework'
-import { PAYOUT_MODULE } from '@mercurjs/payout'
-
+import { PAYOUT_MODULE } from '../../../modules/payout'
+import { PayoutWorkflowEvents } from '../../../modules/payout/types'
 import {
   calculatePayoutForOrderStep,
   createPayoutStep,

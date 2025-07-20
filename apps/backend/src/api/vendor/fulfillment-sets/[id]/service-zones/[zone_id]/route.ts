@@ -2,8 +2,7 @@ import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 import { updateServiceZonesWorkflow } from '@medusajs/medusa/core-flows'
 
-import { IntermediateEvents } from '@mercurjs/framework'
-
+import { IntermediateEvents } from '../../../../../../modules/algolia/types'
 import { fetchSellerByAuthActorId } from '../../../../../../shared/infra/http/utils'
 import { deleteVendorServiceZonesWorkflow } from '../../../../../../workflows/fulfillment-set/workflows'
 import { VendorUpdateServiceZoneType } from '../../../validators'

@@ -5,8 +5,7 @@ import {
   updateShippingOptionsWorkflow
 } from '@medusajs/medusa/core-flows'
 
-import { IntermediateEvents } from '@mercurjs/framework'
-
+import { IntermediateEvents } from '../../../../modules/algolia/types'
 import { VendorUpdateShippingOptionType } from '../validators'
 
 /**

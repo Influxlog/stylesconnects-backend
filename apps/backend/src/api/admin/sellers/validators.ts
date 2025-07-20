@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { createFindParams } from '@medusajs/medusa/api/utils/validators'
 
-import { StoreStatus } from '@mercurjs/framework'
+import { StoreStatus } from '../../../modules/seller/types'
 
 export type AdminSellerParamsType = z.infer<typeof AdminSellerParams>
 export const AdminSellerParams = createFindParams({

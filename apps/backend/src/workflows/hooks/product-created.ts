@@ -4,11 +4,10 @@ import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 import { createProductsWorkflow } from '@medusajs/medusa/core-flows'
 import { StepResponse } from '@medusajs/workflows-sdk'
 
-import { AlgoliaEvents } from '@mercurjs/framework'
-import { SELLER_MODULE } from '@mercurjs/seller'
-
 import sellerShippingProfile from '../../links/seller-shipping-profile'
-import { productsCreatedHookHandler } from '../attribute/utils'
+import { AlgoliaEvents } from '../../modules/algolia/types'
+import { productsCreatedHookHandler } from '../../modules/attribute/utils'
+import { SELLER_MODULE } from '../../modules/seller'
 
 const getVariantInventoryItemIds = async (
   variantId: string,

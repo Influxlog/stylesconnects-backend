@@ -6,8 +6,7 @@ import {
   when
 } from '@medusajs/workflows-sdk'
 
-import { CreateCommissionRuleDTO } from '@mercurjs/framework'
-
+import { CreateCommissionRuleDTO } from '../../../modules/commission/types'
 import { createCommissionRuleStep, deleteCommissionRuleStep } from '../steps'
 
 export const upsertDefaultCommissionRuleWorkflow = createWorkflow(

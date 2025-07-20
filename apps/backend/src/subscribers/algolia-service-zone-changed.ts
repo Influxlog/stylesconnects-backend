@@ -1,10 +1,9 @@
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/framework'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 
-import { AlgoliaEvents, IntermediateEvents } from '@mercurjs/framework'
-
 import sellerProduct from '../links/seller-product'
 import sellerServiceZone from '../links/seller-service-zone'
+import { AlgoliaEvents, IntermediateEvents } from '../modules/algolia/types'
 
 export default async function serviceZoneChangedHandler({
   event,

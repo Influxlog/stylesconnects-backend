@@ -1,7 +1,7 @@
 import { Modules } from '@medusajs/framework/utils'
 import { updateProductVariantsWorkflow } from '@medusajs/medusa/core-flows'
 
-import { AlgoliaEvents } from '@mercurjs/framework'
+import { AlgoliaEvents } from '../../modules/algolia/types/events'
 
 updateProductVariantsWorkflow.hooks.productVariantsUpdated(
   async ({ product_variants }, { container }) => {

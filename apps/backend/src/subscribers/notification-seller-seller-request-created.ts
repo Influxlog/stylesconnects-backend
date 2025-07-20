@@ -1,8 +1,8 @@
 import { Modules } from '@medusajs/framework/utils'
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/medusa'
 
-import { RequestDTO, SellerRequest } from '@mercurjs/framework'
-import { ResendNotificationTemplates } from '@mercurjs/resend'
+import { RequestDTO, SellerRequest } from '../modules/requests/types'
+import { ResendNotificationTemplates } from '../modules/resend/types/templates'
 
 export default async function requestCreatedSellerAccountUpdatesNotifyHandler({
   event,

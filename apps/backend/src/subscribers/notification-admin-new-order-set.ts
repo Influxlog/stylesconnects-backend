@@ -1,7 +1,7 @@
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 import { SubscriberArgs, SubscriberConfig } from '@medusajs/medusa'
 
-import { OrderSetWorkflowEvents } from '@mercurjs/framework'
+import { OrderSetWorkflowEvents } from '../modules/marketplace/types'
 
 export default async function newOrderSetAdminNotifyHandler({
   event,

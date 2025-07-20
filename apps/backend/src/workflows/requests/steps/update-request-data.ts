@@ -1,8 +1,9 @@
 import { MedusaError } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { UpdateRequestDataDTO } from '@mercurjs/framework'
-import { REQUESTS_MODULE, RequestsModuleService } from '@mercurjs/requests'
+import { REQUESTS_MODULE } from '../../../modules/requests'
+import RequestsModuleService from '../../../modules/requests/service'
+import { UpdateRequestDataDTO } from '../../../modules/requests/types'
 
 export const updateRequestDataStep = createStep(
   'update-request-data',

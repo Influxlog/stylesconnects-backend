@@ -1,11 +1,9 @@
 import { MathBN, MedusaError } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { RefundSplitOrderPaymentsDTO } from '@mercurjs/framework'
-import {
-  SPLIT_ORDER_PAYMENT_MODULE,
-  SplitOrderPaymentModuleService
-} from '@mercurjs/split-order-payment'
+import { SPLIT_ORDER_PAYMENT_MODULE } from '../../../modules/split-order-payment'
+import SplitOrderPaymentModuleService from '../../../modules/split-order-payment/service'
+import { RefundSplitOrderPaymentsDTO } from '../../../modules/split-order-payment/types'
 
 export const validateRefundSplitOrderPaymentStep = createStep(
   'validate-refund-split-order-payments',

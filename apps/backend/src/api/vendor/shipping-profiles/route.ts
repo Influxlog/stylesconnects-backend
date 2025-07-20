@@ -2,9 +2,8 @@ import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/framework'
 import { ContainerRegistrationKeys, Modules } from '@medusajs/framework/utils'
 import { createShippingProfilesWorkflow } from '@medusajs/medusa/core-flows'
 
-import { SELLER_MODULE } from '@mercurjs/seller'
-
 import sellerShippingProfile from '../../../links/seller-shipping-profile'
+import { SELLER_MODULE } from '../../../modules/seller'
 import { fetchSellerByAuthActorId } from '../../../shared/infra/http/utils'
 import { VendorCreateShippingProfileType } from './validators'
 

@@ -6,9 +6,8 @@ import {
 } from '@medusajs/framework/workflows-sdk'
 import { createRemoteLinkStep } from '@medusajs/medusa/core-flows'
 
-import { ATTRIBUTE_MODULE } from '@mercurjs/attribute'
-import { CreateProductAttributeValueDTO } from '@mercurjs/framework'
-
+import { ATTRIBUTE_MODULE } from '../../../modules/attribute'
+import { CreateProductAttributeValueDTO } from '../../../modules/attribute/types'
 import { createAttributeValueStep, validateAttributeValueStep } from '../steps'
 
 export const createAttributeValueWorkflowId = 'create-attribute-value'

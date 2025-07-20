@@ -1,8 +1,9 @@
 import { toHandle } from '@medusajs/framework/utils'
 import { StepResponse, createStep } from '@medusajs/framework/workflows-sdk'
 
-import { ATTRIBUTE_MODULE, AttributeModuleService } from '@mercurjs/attribute'
-import { CreateAttributeDTO } from '@mercurjs/framework'
+import { ATTRIBUTE_MODULE } from '../../../modules/attribute'
+import AttributeModuleService from '../../../modules/attribute/service'
+import { CreateAttributeDTO } from '../../../modules/attribute/types'
 
 export const createAttributesStepId = 'create-attributes'
 
