@@ -9,6 +9,7 @@ import { storeSellerMiddlewares } from './seller/middlewares'
 import { storeShippingOptionRoutesMiddlewares } from './shipping-options/middlewares'
 import { storeStyledTokenMiddlewares } from './styledtoken/middlewares'
 import { storeWishlistMiddlewares } from './wishlist/middlewares'
+import { storeAdsPromotionMiddlewares } from './ads-promotion/middlewares'
 
 export const storeMiddlewares: MiddlewareRoute[] = [
   {
@@ -30,5 +31,6 @@ export const storeMiddlewares: MiddlewareRoute[] = [
   ...storeSellerMiddlewares,
   ...storeShippingOptionRoutesMiddlewares,
   ...storeWishlistMiddlewares,
+  ...storeAdsPromotionMiddlewares,
   ...storeReturnsMiddlewares
 ]

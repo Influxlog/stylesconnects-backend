@@ -28,6 +28,10 @@ module.exports = defineConfig({
     { resolve: './src/modules/styledtoken' },
     { resolve: './src/modules/split-order-payment' },
     { resolve: './src/modules/attribute' },
+    { 
+      resolve: './src/modules/ads-promotion',
+      key: 'adsPromotionModuleService'
+    }, 
     {
       resolve: './src/modules/taxcode',
       options: {

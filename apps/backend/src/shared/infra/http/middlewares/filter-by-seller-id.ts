@@ -14,6 +14,11 @@ export function filterBySellerId() {
       req.scope
     )
 
+    // Initialize filterableFields if it doesn't exist
+    if (!req.filterableFields) {
+      req.filterableFields = {}
+    }
+
     req.filterableFields.seller_id = seller.id
 
     return next()

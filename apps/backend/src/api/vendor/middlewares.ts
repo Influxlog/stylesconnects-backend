@@ -41,6 +41,7 @@ import { vendorStatisticsMiddlewares } from './statistics/middlewares'
 import { vendorStockLocationsMiddlewares } from './stock-locations/middlewares'
 import { vendorStoresMiddlewares } from './stores/middlewares'
 import { vendorUploadMiddlewares } from './uploads/middlewares'
+import { vendorAdsPromotionMiddlewares } from './ads-promotion/middlewares'
 
 export const vendorMiddlewares: MiddlewareRoute[] = [
   {
@@ -121,5 +122,6 @@ export const vendorMiddlewares: MiddlewareRoute[] = [
   ...vendorRegionsMiddlewares,
   ...vendorNotificationMiddlewares,
   ...vendorCommissionMiddlewares,
+  ...vendorAdsPromotionMiddlewares,
   ...vendorAttributeMiddlewares
 ]
