@@ -142,7 +142,7 @@ export const POST = async (
     ['id', 'name', 'email', 'phone'] // Add the required fields
   )
 
-  const { result } = await updateSellerBankingWorkflow(req.scope).run({
+  await updateSellerBankingWorkflow(req.scope).run({
     input: {
       seller_id: seller.id,
       business_name: seller.name,
