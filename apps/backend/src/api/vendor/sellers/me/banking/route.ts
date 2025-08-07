@@ -3,7 +3,6 @@ import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 import { fetchSellerByAuthActorId } from '../../../../../shared/infra/http/utils/seller'
 import { updateSellerBankingWorkflow } from '../../../../../workflows/seller/workflows/update-seller-banking'
-import { PaystackSubaccountService } from '../../../../../modules/payment-paystack/services/paystack-subaccount'
 
 export interface BankingDetailsInput {
   banking_info: {
@@ -19,7 +18,7 @@ export interface BankingDetailsInput {
  * @oas [get] /vendor/sellers/me/banking
  * operationId: "VendorGetSellerBanking"
  * summary: "Get Seller Banking Details"
- * description: "Retrieves the banking and Paystack information for the authenticated seller."
+ * description: "Retrieves the banking and Paystack recipient information for the authenticated seller."
  * x-authenticated: true
  * responses:
  *   "200":
@@ -32,15 +31,13 @@ export interface BankingDetailsInput {
  *             banking_info:
  *               type: object
  *               nullable: true
- *             paystack_subaccount_code:
+ *             paystack_recipient_code:
  *               type: string
  *               nullable: true
- *             paystack_subaccount_id:
- *               type: string
- *               nullable: true
- *             subaccount_status:
- *               type: string
- *               nullable: true
+ *               description: "Paystack recipient code for payouts. If null, payout account has not been set up."
+ *             has_payout_account:
+ *               type: boolean
+ *               description: "Indicates whether the seller has set up a payout account"
  * tags:
  *   - Seller Banking
  * security:
@@ -63,34 +60,19 @@ export const GET = async (
   } = await query.graph(
     {
       entity: 'seller',
-      fields: ['banking_info', 'paystack_subaccount_code', 'paystack_subaccount_id', 'name'],
+      fields: ['banking_info', 'paystack_recipient_code', 'name'],
       filters: { id }
     },
     { throwIfKeyNotFound: true }
   )
 
-  let subaccountStatus:any = null
-  if (seller.paystack_subaccount_code) {
-    try {
-      const paystackService = new PaystackSubaccountService()
-      const subaccountData = await paystackService.getSubaccount(seller.paystack_subaccount_code)
-      subaccountStatus = {
-        active: subaccountData.data.active,
-        is_verified: subaccountData.data.is_verified,
-        settlement_schedule: subaccountData.data.settlement_schedule
-      }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      // Subaccount might not exist or API error
-      subaccountStatus = { error: 'Unable to fetch subaccount status' }
-    }
-  }
+  // Check if payout account has been set up
+  const has_payout_account = !!seller.paystack_recipient_code
 
   res.json({
     banking_info: seller.banking_info,
-    paystack_subaccount_code: seller.paystack_subaccount_code,
-    paystack_subaccount_id: seller.paystack_subaccount_id,
-    subaccount_status: subaccountStatus
+    paystack_recipient_code: seller.paystack_recipient_code,
+    has_payout_account
   })
 }
 
@@ -98,7 +80,7 @@ export const GET = async (
  * @oas [post] /vendor/sellers/me/banking
  * operationId: "VendorUpdateSellerBanking"
  * summary: "Update Seller Banking Details"
- * description: "Updates banking information and automatically creates Paystack subaccount."
+ * description: "Updates banking information and automatically creates Paystack transfer recipient."
  * x-authenticated: true
  * requestBody:
  *   content:
@@ -137,12 +119,12 @@ export const GET = async (
  *           properties:
  *             banking_info:
  *               type: object
- *             paystack_subaccount_code:
+ *             paystack_recipient_code:
  *               type: string
- *             paystack_subaccount_id:
- *               type: string
- *             subaccount_status:
- *               type: object
+ *               description: "Paystack recipient code for payouts"
+ *             has_payout_account:
+ *               type: boolean
+ *               description: "Indicates whether the seller has set up a payout account"
  * tags:
  *   - Seller Banking
  * security:
@@ -176,7 +158,7 @@ export const POST = async (
   } = await query.graph(
     {
       entity: 'seller',
-      fields: ['banking_info', 'paystack_subaccount_code', 'paystack_subaccount_id'],
+      fields: ['banking_info', 'paystack_recipient_code'],
       filters: { id: seller.id }
     },
     { throwIfKeyNotFound: true }
@@ -184,11 +166,7 @@ export const POST = async (
 
   res.json({
     banking_info: updatedSeller.banking_info,
-    paystack_subaccount_code: updatedSeller.paystack_subaccount_code,
-    paystack_subaccount_id: updatedSeller.paystack_subaccount_id,
-    subaccount_status: {
-      active: result.transfer_recipient ? true : false,
-      is_verified: result.transfer_recipient ? true : false
-    }
+    paystack_recipient_code: updatedSeller.paystack_recipient_code,
+    has_payout_account: !!updatedSeller.paystack_recipient_code
   })
 }
