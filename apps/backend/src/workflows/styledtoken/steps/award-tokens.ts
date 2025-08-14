@@ -11,8 +11,7 @@ export const awardTokensStep = createStep(
     const result = await styledTokenService.awardTokens(input)
     
     return new StepResponse(result, {
-      customer_id: input.customer_id,
-      transaction_id: result.transaction.id
+      customer_id: input.customer_id
     })
   },
   async (compensateInput, { container }) => {

@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from '@medusajs/framework/utils';
 
-
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 module.exports = defineConfig({
@@ -50,6 +49,23 @@ module.exports = defineConfig({
       }
     },
     {
+      resolve: '@medusajs/file',
+      options: {
+        providers: [
+          {
+            resolve: './src/modules/file-cloudinary',
+            id: 'cloudinary',
+            options: {
+              cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+              api_key: process.env.CLOUDINARY_API_KEY,
+              api_secret: process.env.CLOUDINARY_API_SECRET,
+              secure: true,
+            }
+          }
+        ]
+      }
+    },
+    {
       resolve: '@medusajs/medusa/payment',
       options: {
         providers: [
@@ -66,7 +82,7 @@ module.exports = defineConfig({
             options: {
               secretKey: process.env.PAYSTACK_SECRET_KEY,
               publicKey: process.env.PAYSTACK_PUBLIC_KEY,
-              webhookSecret: process.env.PAYSTACK_WEBHOOK_SECRET // Add this line
+              webhookSecret: process.env.PAYSTACK_WEBHOOK_SECRET
             }
           }
         ]

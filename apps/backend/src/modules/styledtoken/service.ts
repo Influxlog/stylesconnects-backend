@@ -45,17 +45,17 @@ class StyledTokenModuleService extends MedusaService({
     }
 
     // Create transaction record
-    const transaction = await this.createTokenTransactions({
-      customer_id: data.customer_id,
-      type: 'earned',
-      activity_type: data.activity_type,
-      amount: data.amount,
-      reference_id: data.reference_id,
-      reference_type: data.reference_type,
-      description: data.description,
-      expires_at: data.expires_at,
-      metadata: data.metadata
-    })
+    // const transaction = await this.createTokenTransactions({
+    //   customer_id: data.customer_id,
+    //   type: 'earned',
+    //   activity_type: data.activity_type,
+    //   amount: data.amount,
+    //   reference_id: data.reference_id,
+    //   reference_type: data.reference_type,
+    //   description: data.description,
+    //   expires_at: data.expires_at,
+    //   metadata: data.metadata
+    // })
 
     // Update token account balance
     const updatedAccount = await this.updateStyledTokens({
@@ -64,7 +64,7 @@ class StyledTokenModuleService extends MedusaService({
       total_earned: tokenAccount.total_earned + data.amount
     })
 
-    return { account: updatedAccount, transaction }
+    return { account: updatedAccount }
   }
 
   async spendTokens(data: {
@@ -83,16 +83,16 @@ class StyledTokenModuleService extends MedusaService({
     }
 
     // Create transaction record
-    const transaction = await this.createTokenTransactions({
-      customer_id: data.customer_id,
-      type: 'spent',
-      activity_type: data.activity_type,
-      amount: data.amount,
-      reference_id: data.reference_id,
-      reference_type: data.reference_type,
-      description: data.description,
-      metadata: data.metadata
-    })
+    // const transaction = await this.createTokenTransactions({
+    //   customer_id: data.customer_id,
+    //   type: 'spent',
+    //   activity_type: data.activity_type,
+    //   amount: data.amount,
+    //   reference_id: data.reference_id,
+    //   reference_type: data.reference_type,
+    //   description: data.description,
+    //   metadata: data.metadata
+    // })
 
     // Update token account balance
     const updatedAccount = await this.updateStyledTokens({
@@ -101,7 +101,7 @@ class StyledTokenModuleService extends MedusaService({
       total_spent: tokenAccount.total_spent + data.amount
     })
 
-    return { account: updatedAccount, transaction }
+    return { account: updatedAccount }
   }
 
   async getCustomerTransactions(customerId: string, options: any = {}) {
@@ -141,8 +141,7 @@ class StyledTokenModuleService extends MedusaService({
     if (existingConfig) {
       return await this.updateTokenConfigs({
         id: existingConfig.id,
-        ...data,
-        updated_at: new Date()
+        ...data
       })
     } else {
       return await this.createTokenConfigs({
