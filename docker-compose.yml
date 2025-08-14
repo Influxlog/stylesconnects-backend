@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: mercur-postgres
+    environment:
+      POSTGRES_USER: medusa
+      POSTGRES_PASSWORD: medusa_password
+      POSTGRES_DB: mercur_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - mercur-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medusa -d mercur_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: mercur-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - mercur-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: mercur-backend
+    ports:
+      - "9000:9000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://medusa:medusa_password@postgres:5432/mercur_db
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-supersecret}
+      - COOKIE_SECRET=${COOKIE_SECRET:-supersecret}
+      - STORE_CORS=${STORE_CORS:-http://localhost:3000}
+      - ADMIN_CORS=${ADMIN_CORS:-http://localhost:9000}
+      - VENDOR_CORS=${VENDOR_CORS:-http://localhost:5173}
+      - AUTH_CORS=${AUTH_CORS:-http://localhost:9000,http://localhost:5173,http://localhost:3000}
+      - STRIPE_SECRET_API_KEY=${STRIPE_SECRET_API_KEY}
+      - STRIPE_CONNECTED_ACCOUNTS_WEBHOOK_SECRET=${STRIPE_CONNECTED_ACCOUNTS_WEBHOOK_SECRET}
+      - PAYSTACK_SECRET_KEY=${PAYSTACK_SECRET_KEY}
+      - PAYSTACK_PUBLIC_KEY=${PAYSTACK_PUBLIC_KEY}
+      - PAYSTACK_WEBHOOK_SECRET=${PAYSTACK_WEBHOOK_SECRET}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL:-onboarding@resend.dev}
+      - ALGOLIA_APP_ID=${ALGOLIA_APP_ID}
+      - ALGOLIA_API_KEY=${ALGOLIA_API_KEY}
+      - TALK_JS_APP_ID=${TALK_JS_APP_ID}
+      - TALK_JS_SECRET_API_KEY=${TALK_JS_SECRET_API_KEY}
+      - VENDOR_PANEL_URL=${VENDOR_PANEL_URL:-http://localhost:5173}
+      - STOREFRONT_URL=${STOREFRONT_URL:-http://localhost:7001}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:9000}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - mercur-network
+    volumes:
+      - backend_uploads:/app/apps/backend/static
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  postgres_data:
+  backend_uploads:
+
+networks:
+  mercur-network:
+    driver: bridge

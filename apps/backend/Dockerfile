@@ -1,56 +1,59 @@
 FROM node:20-alpine AS base
 
-# The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
-# Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
-
 FROM base AS builder
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk update
-RUN apk add --no-cache libc6-compat
-# Set working directory
+# Install dependencies for building
+RUN apk update && apk add --no-cache libc6-compat python3 make g++
+
 WORKDIR /app
 RUN yarn global add turbo
-COPY . .
-RUN turbo prune api --docker
 
-# Add lockfile and package.json's of isolated subworkspace
-FROM base AS installer
-RUN apk update
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
+# Copy root package files and workspace configuration
+COPY package.json yarn.lock turbo.json ./
+COPY apps/backend/package.json ./apps/backend/package.json
+COPY packages ./packages
 
-# First install dependencies (as they change less often)
-COPY --from=builder /app/out/json/ .
-RUN yarn install
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
-# Build the project and its dependencies
-COPY --from=builder /app/out/full/ .
+# Copy source code
+COPY apps/backend ./apps/backend
 
-# Uncomment and use build args to enable remote caching
-# ARG TURBO_TEAM
-# ENV TURBO_TEAM=$TURBO_TEAM
-
-# ARG TURBO_TOKEN
-# ENV TURBO_TOKEN=$TURBO_TOKEN
-
-RUN yarn turbo build
+# Build only the backend
+RUN yarn turbo build --filter=api
 
 FROM base AS runner
 WORKDIR /app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 medusa
-RUN adduser --system --uid 1001 medusa
+# Install runtime dependencies
+RUN apk update && apk add --no-cache curl
 
-# Ensure the medusa user owns the backend folder
-RUN mkdir -p /app/apps/backend/static
-RUN chown -R medusa:medusa /app/apps/backend
+# Create medusa user
+RUN addgroup --system --gid 1001 medusa && \
+    adduser --system --uid 1001 --ingroup medusa medusa
 
+# Create necessary directories
+RUN mkdir -p /app/apps/backend/static && \
+    chown -R medusa:medusa /app
+
+# Copy built application
+COPY --from=builder --chown=medusa:medusa /app/apps/backend/dist ./apps/backend/dist
+COPY --from=builder --chown=medusa:medusa /app/apps/backend/package.json ./apps/backend/package.json
+COPY --from=builder --chown=medusa:medusa /app/apps/backend/medusa-config.ts ./apps/backend/medusa-config.ts
+COPY --from=builder --chown=medusa:medusa /app/apps/backend/src ./apps/backend/src
+COPY --from=builder --chown=medusa:medusa /app/node_modules ./node_modules
+COPY --from=builder --chown=medusa:medusa /app/apps/backend/node_modules ./apps/backend/node_modules
+
+# Switch to medusa user
 USER medusa
-COPY --from=installer /app .
 
 WORKDIR /app/apps/backend
 
-RUN yarn db:migrate
+# Expose port
+EXPOSE 9000
 
-CMD ["yarn", "start"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:9000/health || exit 1
+
+# Start the application
+CMD ["sh", "-c", "yarn db:migrate && yarn start"]
