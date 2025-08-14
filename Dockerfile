@@ -1,45 +1,43 @@
 FROM node:20-alpine AS base
 
-# Install dependencies
-RUN apk update && apk add --no-cache libc6-compat
+FROM base AS builder
+RUN apk update
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+RUN yarn global add turbo
+COPY . .
+RUN turbo prune api --docker
 
-# Set working directory
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install turbo globally
-RUN yarn global add turbo
-
-# Copy package files
-COPY package.json yarn.lock ./
-COPY apps/backend/package.json ./apps/backend/
-COPY packages ./packages
-COPY turbo.json ./
-
-# Install dependencies
+# First install dependencies (as they change less often)
+COPY --from=builder /app/out/json/ .
 RUN yarn install
 
-# Copy source code
-COPY . .
+# Build the project and its dependencies
+COPY --from=builder /app/out/full/ .
+RUN yarn turbo build
 
-# Build the backend
-RUN yarn turbo build --filter=api
-
-# Production stage
-FROM node:20-alpine AS runner
+FROM base AS runner
 WORKDIR /app
 
-# Create user
+# Don't run production as root
 RUN addgroup --system --gid 1001 medusa
 RUN adduser --system --uid 1001 medusa
 
-# Copy built application
-COPY --from=base --chown=medusa:medusa /app ./
+# Ensure the medusa user owns the backend folder
+RUN mkdir -p /app/apps/backend/static
+RUN chown -R medusa:medusa /app/apps/backend
 
 USER medusa
+COPY --from=installer /app .
 
-# Set working directory to backend
 WORKDIR /app/apps/backend
 
-# Run migrations and start
 RUN yarn db:migrate
+
 CMD ["yarn", "start"]
