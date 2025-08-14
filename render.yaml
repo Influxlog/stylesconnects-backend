@@ -2,8 +2,8 @@ services:
   - type: web
     name: mercur-backend
     env: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
+    dockerfilePath: ./apps/backend/Dockerfile
+    dockerContext: ./apps/backend
     plan: starter
     healthCheckPath: /health
     envVars:
