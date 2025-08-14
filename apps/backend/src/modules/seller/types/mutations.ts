@@ -23,6 +23,9 @@ export interface UpdateSellerDTO {
   handle?: string
   photo?: string
   store_status?: StoreStatus
+  banking_info?: Record<string, unknown> | null
+  paystack_recipient_code?: string
+  paystack_recipient_id?: string
 }
 
 export interface CreateMemberDTO {
