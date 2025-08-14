@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: mercur-backend
+    env: docker
+    dockerfilePath: ./apps/backend/Dockerfile
+    dockerContext: .
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mercur-db
+          property: connectionString
+
+databases:
+  - name: mercur-db
+    plan: starter
