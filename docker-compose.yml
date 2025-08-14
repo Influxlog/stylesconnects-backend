@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./apps/backend/Dockerfile
+      dockerfile: ./Dockerfile
     ports:
       - "9000:9000"
     environment:
