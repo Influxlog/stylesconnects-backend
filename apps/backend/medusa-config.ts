@@ -16,19 +16,6 @@ module.exports = defineConfig({
     }
   },
   modules: [
-    // Add core modules that your application depends on
-    {
-      resolve: '@medusajs/medusa/stock-location',
-      key: 'stockLocationService'
-    },
-    {
-      resolve: '@medusajs/medusa/inventory',
-      key: 'inventoryService'
-    },
-    {
-      resolve: '@medusajs/medusa/fulfillment',
-      key: 'fulfillmentService'
-    },
     { resolve: './src/modules/seller' },
     { resolve: './src/modules/marketplace' },
     { resolve: './src/modules/configuration' },
